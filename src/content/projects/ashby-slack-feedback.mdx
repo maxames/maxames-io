@@ -24,7 +24,7 @@ Interview feedback often gets delayed, with one of the reasons being that comple
 
 This system reduces that to a single click from Slack. Interviewers receive automated reminders before interviews with one-click access to feedback forms that auto-generate from Ashby scorecard definitions and submit directly to Ashby's API.
 
-Most recruiting tools use Slack for notifications or simple approvals. This treats Slack as a full feedback surface with dynamic form generation.
+Most recruiting tools use Slack for notifications or simple approvals. This treats Slack as a complete feedback interface with dynamic form generation.
 
 Deployment guides included for Docker, Render, Railway, Fly.io, and manual installation.
 
@@ -107,11 +107,11 @@ Slack's `view_closed` event doesn't include form state, so the system can't save
 
 Jobs run every 5 minutes via APScheduler. Too early and context isn't fresh; too late and interviewers are already in the meeting. The 4-20 minute window balances timeliness with usefulness.
 
-Single-instance only—horizontal scaling would require distributed lock (Redis) or external cron triggering admin endpoints. Unlikely to be necessary unless interview volume exceeds several hundred per hour.
+Designed for single-instance deployment. Horizontal scaling would require distributed locks or external job triggers, but is unlikely to be necessary for typical organizational interview volumes.
 
 ### Idempotency
 
-**Webhooks**: Full-replace strategy ensures identical final state regardless of duplicates.
+**Webhooks**: Full-replace strategy ensures identical final state for duplicate webhooks. Note: Out-of-order webhooks could overwrite newer data (see Full-Replace Upsert Strategy above).
 
 **Reminders**: Claim-before-send pattern. The system inserts a record into `feedback_reminders_sent` before sending the Slack message. A unique constraint on `(event_id, interviewer_id)` prevents duplicate sends even if the job runs multiple times.
 
@@ -223,11 +223,11 @@ The result: type-safe, well-tested code with clear separation of concerns, compl
 
 Documentation included for:
 
-- **Render.com** - One-click via `render.yaml`
-- **Railway** - CLI deployment
-- **Fly.io** - Edge deployment
+- **Render.com** - `render.yaml` blueprint (manual env vars and schema init required)
+- **Railway** - CLI deployment (manual database and env var setup)
+- **Fly.io** - Edge deployment (global CDN, manual configuration)
 - **Docker Compose** - Local development
-- **Manual** - systemd + nginx + Let's Encrypt
+- **Manual** - Full VPS setup with systemd, nginx, and SSL
 
 Database schema initialization required post-deployment (manual SQL application). Migration tracking via `schema_migrations` table.
 
@@ -240,16 +240,6 @@ Full deployment guides in `/docs/DEPLOYMENT.md`.
 - **Connection pooling**: 2-10 connections (AsyncPG), configurable via environment variable
 - **Health check**: `/health` endpoint returns database status and pool statistics
 - **Graceful shutdown**: Scheduler completes running jobs before disconnect
-
-## Current Status
-
-Open source. No production deployment yet. One component of broader recruiting automation work.
-
-This addresses feedback collection timing and surface. Other friction points—reminder escalation, feedback quality signals, submission analytics—are separate problems that would require additional tooling.
-
-## Limitations
-
-**Single-instance scheduler**: APScheduler runs in-process. Horizontal scaling would require distributed lock (Redis/PostgreSQL advisory locks) or external job trigger (cron calling admin endpoints).
 
 ---
 
