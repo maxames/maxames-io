@@ -59,9 +59,9 @@ The system processes interview schedules through a multi-stage pipeline: webhook
 
 ### Full-Replace Upsert Strategy
 
-When interview schedules update, the system deletes old records and inserts new ones rather than attempting to diff changes. This is simpler to implement and safer for webhook idempotency—duplicate webhooks result in the same final state regardless of order.
+When interview schedules update, the system deletes old records and inserts new ones rather than attempting to diff changes. This is simpler to implement and makes duplicate webhook deliveries safe—replaying the same webhook produces identical results. However, out-of-order webhooks are not currently handled and could theoretically overwrite newer data with older data.
 
-Trade-off: Slightly more database writes, but eliminates an entire class of sync bugs.
+Trade-off: More database writes, but eliminates an entire class of diffing and synchronization complexity.
 
 ### TypedDict at Boundaries
 
@@ -244,8 +244,6 @@ This addresses feedback collection timing and surface. Other friction points—r
 ## Limitations
 
 **Single-instance scheduler**: APScheduler runs in-process. Horizontal scaling would require distributed lock (Redis/PostgreSQL advisory locks) or external job trigger (cron calling admin endpoints).
-
-**No retry logic for failed Slack messages**: If Slack API call fails, reminder is marked as sent to prevent duplicate sends. Manual retry via admin endpoint required.
 
 **Timezone handling**: All timestamps stored as UTC. Slack converts to user timezone automatically. Ashby API assumes UTC for ISO 8601 strings with 'Z' suffix.
 
