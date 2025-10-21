@@ -209,7 +209,7 @@ The result: type-safe, well-tested code with clear separation of concerns, compl
 
 ## Type Safety and Testing
 
-**Type checking**: Pyright strict mode, zero type errors. All external API responses typed at boundaries using TypedDict. Services and API handlers work with typed structures throughout.
+**Type checking**: Pyright strict mode enabled. TypedDict used at API boundaries for external responses. Core business logic uses type hints, though strict mode catches type propagation issues from dynamic JSON structures.
 
 **Test coverage**: ~50%
 
