@@ -1,11 +1,20 @@
 [
-  {
+    {
     "id": 1,
+    "icon": {
+      "type": "lucide",
+      "name": "linkedin"
+    },
+    "text": "linkedin",
+    "link": "https://linkedin.com/in/maxames"
+  },
+  {
+    "id": 2,
     "icon": {
       "type": "lucide",
       "name": "github"
     },
     "text": "GitHub",
-    "link": "https://github.com/louisescher/spectre"
+    "link": "https://github.com/maxames/"
   }
 ]

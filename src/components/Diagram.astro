@@ -1,0 +1,145 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+
+export interface Props {
+  src: string; // e.g., "information-flow"
+  alt?: string;
+}
+
+const { src, alt } = Astro.props;
+
+// Read the SVG file from assets
+let svg: string;
+
+try {
+  // Try multiple possible paths
+  const possiblePaths = [
+    new URL(`../content/assets/${src}.svg`, import.meta.url),
+    path.resolve(process.cwd(), `src/content/assets/${src}.svg`),
+    path.resolve(process.cwd(), `./src/content/assets/${src}.svg`)
+  ];
+
+  let svgPath: string | URL | undefined;
+  for (const testPath of possiblePaths) {
+    try {
+      if (typeof testPath === 'string') {
+        fs.accessSync(testPath);
+        svgPath = testPath;
+        break;
+      } else {
+        fs.accessSync(testPath);
+        svgPath = testPath;
+        break;
+      }
+    } catch {
+      continue;
+    }
+  }
+
+  if (!svgPath) {
+    throw new Error(`SVG not found in any expected location`);
+  }
+
+  svg = fs.readFileSync(svgPath, "utf8");
+} catch (error) {
+  console.error(`Failed to load diagram: ${src}.svg`, error);
+  svg = `<svg width="400" height="100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="#202020" stroke="#a277ff" stroke-width="2"/>
+    <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff" font-family="Inter, sans-serif" font-size="14">
+      Diagram not found: ${src}
+    </text>
+  </svg>`;
+}
+---
+
+<div class="diagram" set:html={svg} />
+
+<style>
+  .diagram {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+    background-color: transparent;
+  }
+
+  .diagram svg {
+    max-width: 100%;
+    height: auto;
+    background-color: transparent;
+    border-radius: 0.25rem;
+    border: 1px solid #353535;
+    padding: 1rem;
+  }
+
+  /* Force your site's theme colors on the SVG */
+  .diagram svg text {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 14px !important;
+    fill: #ffffff !important;
+    font-weight: 500 !important;
+  }
+
+  /* Override any light backgrounds with dark theme */
+  .diagram svg rect,
+  .diagram svg circle,
+  .diagram svg polygon {
+    fill: #202020 !important;
+    stroke: #a277ff !important;
+    stroke-width: 2px !important;
+  }
+
+  /* Style different node types */
+  .diagram svg .node.primary rect,
+  .diagram svg .node.primary circle {
+    fill: #8c5cf5 !important;
+    stroke: #c2a8fd !important;
+  }
+
+  .diagram svg .node.secondary rect,
+  .diagram svg .node.secondary circle {
+    fill: #282828 !important;
+    stroke: #8c5cf5 !important;
+  }
+
+  .diagram svg .node.tertiary rect,
+  .diagram svg .node.tertiary circle {
+    fill: #303030 !important;
+    stroke: #c2a8fd !important;
+  }
+
+  /* Style connection lines */
+  .diagram svg path {
+    stroke: #ffffff !important;
+    stroke-width: 2px !important;
+  }
+
+  .diagram svg .arrowhead {
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+  }
+
+  /* Edge labels */
+  .diagram svg .edgeLabel {
+    background-color: #202020 !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    padding: 0.25rem 0.5rem !important;
+    border-radius: 0.125rem !important;
+    border: 1px solid #353535 !important;
+  }
+
+  /* Responsive design */
+  @media screen and (max-width: 640px) {
+    .diagram {
+      margin: 1rem -1rem;
+    }
+
+    .diagram svg {
+      border-left: none;
+      border-right: none;
+      border-radius: 0;
+      padding: 0.5rem;
+    }
+  }
+</style>

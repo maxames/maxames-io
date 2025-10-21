@@ -1,6 +1,6 @@
 import type { AstroIntegration } from 'astro';
+import { z } from 'astro/zod';
 import { viteVirtualModulePluginBuilder } from './utils/virtual-module-plugin-builder';
-import { z } from 'astro/zod'; 
 
 const openGraphOptionsSchema = z.object({
   /**
@@ -58,7 +58,7 @@ const giscusObjectSchema = z.object({
    */
   emitMetadata: z.boolean(),
   /**
-   * The theme to use for the comments. Defaults to `https://spectre.louisescher.dev/styles/giscus`.
+   * The theme to use for the comments. Defaults to `https://maxames.io/styles/giscus`.
    */
   theme: z.string().optional(),
   /**

@@ -16,7 +16,7 @@ import { giscus } from 'spectre:globals';
  * - A reading speed of 200 words per minute
  * - 10 seconds per image
  * - 20 seconds per code block
- * 
+ *
  * @param post The post to estimate the reading time for
  */
 function timeToRead(post: CollectionEntry<'posts'>): number {
@@ -106,7 +106,7 @@ const { Content, headings } = await render(post);
             data-reactions-enabled={giscus.reactionsEnabled === true ? "1" : "0"}
             data-emit-metadata={giscus.emitMetadata === true ? "1" : "0"}
             data-input-position={giscus.commentsInput}
-            data-theme={giscus.theme || "https://spectre.lou.gg/styles/giscus"}
+            data-theme={giscus.theme || "https://maxames.io/styles/giscus"}
             data-lang={giscus.lang}
             data-loading="lazy"
             crossorigin="anonymous"

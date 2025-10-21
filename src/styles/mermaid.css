@@ -1,0 +1,165 @@
+/* Custom Mermaid chart styling to match site theme */
+.mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+  background-color: transparent;
+}
+
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+  background-color: transparent;
+  border-radius: 0.25rem;
+  border: 1px solid #353535;
+  padding: 1rem;
+}
+
+/* Force dark backgrounds for all node types with good contrast */
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node polygon,
+.mermaid rect.basic,
+.mermaid rect.label-container,
+.mermaid .basic.label-container,
+.mermaid rect[class*="label"],
+.mermaid rect[style*="fill"] {
+  fill: #202020 !important;
+  stroke: #a277ff !important;
+  stroke-width: 2px !important;
+}
+
+/* Nuclear option - override ALL rect elements in mermaid */
+.mermaid rect {
+  fill: #202020 !important;
+  stroke: #a277ff !important;
+  stroke-width: 2px !important;
+}
+
+/* Differentiate node types with border colors while keeping dark backgrounds */
+.mermaid .node.default rect,
+.mermaid .node.default circle,
+.mermaid .node.default polygon {
+  fill: #202020 !important;
+  stroke: #a277ff !important;
+}
+
+.mermaid .node.primary rect,
+.mermaid .node.primary circle,
+.mermaid .node.primary polygon {
+  fill: #8c5cf5 !important;
+  stroke: #c2a8fd !important;
+}
+
+.mermaid .node.secondary rect,
+.mermaid .node.secondary circle,
+.mermaid .node.secondary polygon {
+  fill: #282828 !important;
+  stroke: #8c5cf5 !important;
+}
+
+.mermaid .node.tertiary rect,
+.mermaid .node.tertiary circle,
+.mermaid .node.tertiary polygon {
+  fill: #303030 !important;
+  stroke: #c2a8fd !important;
+}
+
+/* Ensure all text is white for maximum contrast */
+.mermaid .node .label,
+.mermaid .node .nodeLabel,
+.mermaid .nodeLabel,
+.mermaid text {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  font-weight: 500 !important;
+}
+
+/* Style edge labels with dark backgrounds */
+.mermaid .edgeLabel {
+  background-color: #202020 !important;
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  padding: 0.25rem 0.5rem !important;
+  border-radius: 0.125rem !important;
+  border: 1px solid #353535 !important;
+}
+
+/* Style arrows and lines */
+.mermaid .edgePath path {
+  stroke: #c2a8fd !important;
+  stroke-width: 2px !important;
+}
+
+.mermaid .arrowheadPath {
+  fill: #c2a8fd !important;
+  stroke: #c2a8fd !important;
+}
+
+/* Override any light colored fills that cause contrast issues */
+.mermaid rect[fill*="#fff"],
+.mermaid rect[fill*="#f0f"],
+.mermaid rect[fill*="#e8"],
+.mermaid rect[fill*="#f9f"],
+.mermaid rect[fill*="#fef"],
+.mermaid rect[style*="fill:#fff"],
+.mermaid rect[style*="fill:#f0f"],
+.mermaid rect[style*="fill:#e8"],
+.mermaid rect[style*="fill:#f9f"],
+.mermaid rect[style*="fill:#fef"],
+.mermaid .label-container[style*="fill:#fff"],
+.mermaid .label-container[style*="fill:#f0f"],
+.mermaid .label-container[style*="fill:#e8"],
+.mermaid .label-container[style*="fill:#f9f"],
+.mermaid .label-container[style*="fill:#fef"],
+.mermaid .basic.label-container,
+.mermaid svg rect[fill="#fff4e8"],
+.mermaid svg rect[fill="#ffffe8"],
+.mermaid svg rect[fill="#e8f4f8"],
+.mermaid svg rect[fill="#e8f8e8"],
+.mermaid svg rect[fill="#f0f0f0"],
+.mermaid rect[fill="#e8f8e8"],
+.mermaid rect[style*="fill:#e8f8e8"] {
+  fill: #202020 !important;
+}
+
+/* Most aggressive override - target ANY light color pattern */
+.mermaid rect[fill^="#e"],
+.mermaid rect[fill^="#f"],
+.mermaid rect[style*="fill:#e"],
+.mermaid rect[style*="fill:#f"] {
+  fill: #202020 !important;
+}
+
+/* Ultimate override - use CSS animation to force colors after render */
+.mermaid rect {
+  animation: force-dark-bg 0.1s forwards !important;
+}
+
+@keyframes force-dark-bg {
+  to {
+    fill: #202020 !important;
+    stroke: #a277ff !important;
+  }
+}
+
+/* Ensure cluster/group backgrounds are dark */
+.mermaid .cluster rect {
+  fill: rgba(32, 32, 32, 0.8) !important;
+  stroke: #8c5cf5 !important;
+  stroke-width: 1px !important;
+}
+
+/* Responsive design for mobile */
+@media screen and (max-width: 640px) {
+  .mermaid {
+    margin: 1rem -1rem;
+  }
+
+  .mermaid svg {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    padding: 0.5rem;
+  }
+}
