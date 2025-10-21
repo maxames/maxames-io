@@ -6,7 +6,6 @@ import sitemap from '@astrojs/sitemap';
 import expressiveCode from 'astro-expressive-code';
 import spectre from './package/src';
 
-import node from '@astrojs/node';
 import { spectreDark } from './src/ec-theme';
 
 const {
@@ -48,10 +47,7 @@ const config = defineConfig({
       },
       giscus: false
     })
-  ],
-  adapter: node({
-    mode: 'standalone'
-  })
+  ]
 });
 
 export default config;
