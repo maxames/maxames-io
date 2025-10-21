@@ -37,8 +37,8 @@ const config = defineConfig({
           title: 'Max Ames',
           description: 'My place on the internet.'
         },
-        blog: {
-          title: 'Blog',
+        articles: {
+          title: 'Articles',
           description: 'Explore my writings.'
         },
         projects: {

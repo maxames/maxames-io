@@ -102,9 +102,9 @@ export const optionsSchema = z.object({
      */
     home: openGraphOptionsSchema,
     /**
-     * Open Graph meta tags for the blog page.
+     * Open Graph meta tags for the articles page.
      */
-    blog: openGraphOptionsSchema,
+    articles: openGraphOptionsSchema,
     /**
      * Open Graph meta tags for the projects page.
      */
@@ -141,7 +141,7 @@ export default function integration(options: z.infer<typeof optionsSchema>): Ast
     export const twitterHandle = ${JSON.stringify(validatedOptions.twitterHandle)};
     export const openGraph = {
       home: ${JSON.stringify(validatedOptions.openGraph.home)},
-      blog: ${JSON.stringify(validatedOptions.openGraph.blog)},
+      articles: ${JSON.stringify(validatedOptions.openGraph.articles)},
       projects: ${JSON.stringify(validatedOptions.openGraph.projects)},
     };
     export const giscus = ${validatedOptions.giscus ? JSON.stringify(validatedOptions.giscus) : 'false'};
