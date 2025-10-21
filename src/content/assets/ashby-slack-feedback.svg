@@ -1,0 +1,150 @@
+<svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="700" fill="#1a1625"/>
+  
+  <!-- Window frame -->
+  <rect x="20" y="20" width="1160" height="660" rx="12" fill="#252035"/>
+  
+  <!-- Title bar -->
+  <rect x="20" y="20" width="1160" height="40" rx="12" fill="#2d2640"/>
+  <rect x="20" y="48" width="1160" height="12" fill="#2d2640"/>
+  
+  <!-- Window controls -->
+  <circle cx="45" cy="40" r="6" fill="#ff5f57"/>
+  <circle cx="65" cy="40" r="6" fill="#ffbd2e"/>
+  <circle cx="85" cy="40" r="6" fill="#28ca42"/>
+  
+  <!-- Title text -->
+  <text x="600" y="45" font-family="monospace" font-size="14" fill="#a89dd9" text-anchor="middle">project_editor.py</text>
+  
+  <!-- Sidebar -->
+  <rect x="20" y="60" width="250" height="620" fill="#1f1a2e"/>
+  
+  <!-- Sidebar title -->
+  <text x="35" y="85" font-family="monospace" font-size="12" fill="#8b7fc7" font-weight="bold">EXPLORER</text>
+  
+  <!-- File tree -->
+  <g id="file-tree">
+    <!-- Folders -->
+    <text x="35" y="115" font-family="monospace" font-size="11" fill="#d4a5ff">▾ 📁 src</text>
+    <text x="50" y="140" font-family="monospace" font-size="11" fill="#ff79c6">📄 main.py</text>
+    <text x="50" y="160" font-family="monospace" font-size="11" fill="#ff79c6">📄 utils.py</text>
+    <text x="50" y="180" font-family="monospace" font-size="11" fill="#ff79c6">📄 config.py</text>
+    
+    <text x="35" y="210" font-family="monospace" font-size="11" fill="#d4a5ff">▾ 📁 api</text>
+    <text x="50" y="235" font-family="monospace" font-size="11" fill="#ff79c6">📄 routes.py</text>
+    <text x="50" y="255" font-family="monospace" font-size="11" fill="#ff79c6">📄 models.py</text>
+    
+    <text x="35" y="285" font-family="monospace" font-size="11" fill="#d4a5ff">▸ 📁 tests</text>
+    <text x="35" y="310" font-family="monospace" font-size="11" fill="#d4a5ff">▸ 📁 docs</text>
+    <text x="35" y="335" font-family="monospace" font-size="11" fill="#8be9fd">📄 README.md</text>
+    <text x="35" y="360" font-family="monospace" font-size="11" fill="#50fa7b">📄 requirements.txt</text>
+  </g>
+  
+  <!-- Main editor area -->
+  <rect x="270" y="60" width="910" height="620" fill="#1a1625"/>
+  
+  <!-- Line numbers -->
+  <rect x="270" y="60" width="50" height="620" fill="#16141f"/>
+  
+  <!-- Code with syntax highlighting -->
+  <g font-family="'Courier New', monospace" font-size="13">
+    <!-- Line numbers -->
+    <text x="295" y="100" fill="#6272a4" text-anchor="end">1</text>
+    <text x="295" y="125" fill="#6272a4" text-anchor="end">2</text>
+    <text x="295" y="150" fill="#6272a4" text-anchor="end">3</text>
+    <text x="295" y="175" fill="#6272a4" text-anchor="end">4</text>
+    <text x="295" y="200" fill="#6272a4" text-anchor="end">5</text>
+    <text x="295" y="225" fill="#6272a4" text-anchor="end">6</text>
+    <text x="295" y="250" fill="#6272a4" text-anchor="end">7</text>
+    <text x="295" y="275" fill="#6272a4" text-anchor="end">8</text>
+    <text x="295" y="300" fill="#6272a4" text-anchor="end">9</text>
+    <text x="295" y="325" fill="#6272a4" text-anchor="end">10</text>
+    <text x="295" y="350" fill="#6272a4" text-anchor="end">11</text>
+    <text x="295" y="375" fill="#6272a4" text-anchor="end">12</text>
+    <text x="295" y="400" fill="#6272a4" text-anchor="end">13</text>
+    <text x="295" y="425" fill="#6272a4" text-anchor="end">14</text>
+    <text x="295" y="450" fill="#6272a4" text-anchor="end">15</text>
+    
+    <!-- Code content with vibrant colors -->
+    <text x="335" y="100" fill="#ff79c6">async</text>
+    <text x="385" y="100" fill="#ff79c6">def</text>
+    <text x="415" y="100" fill="#50fa7b">fetch_user_data</text>
+    <text x="545" y="100" fill="#f8f8f2">(</text>
+    <text x="555" y="100" fill="#ffb86c">user_id</text>
+    <text x="615" y="100" fill="#f8f8f2">:</text>
+    <text x="630" y="100" fill="#8be9fd">int</text>
+    <text x="665" y="100" fill="#f8f8f2">)</text>
+    <text x="680" y="100" fill="#ff79c6">-></text>
+    <text x="710" y="100" fill="#8be9fd">dict</text>
+    <text x="750" y="100" fill="#f8f8f2">:</text>
+    
+    <text x="335" y="125" fill="#6272a4">    """Fetch user data from API."""</text>
+    
+    <text x="335" y="150" fill="#ff79c6">    try</text>
+    <text x="375" y="150" fill="#f8f8f2">:</text>
+    
+    <text x="355" y="175" fill="#f8f8f2">        response</text>
+    <text x="445" y="175" fill="#ff79c6">=</text>
+    <text x="465" y="175" fill="#ff79c6">await</text>
+    <text x="525" y="175" fill="#f8f8f2">client</text>
+    <text x="585" y="175" fill="#f8f8f2">.</text>
+    <text x="595" y="175" fill="#50fa7b">get</text>
+    <text x="625" y="175" fill="#f8f8f2">(</text>
+    
+    <text x="375" y="200" fill="#f1fa8c">            f</text>
+    <text x="395" y="200" fill="#f1fa8c">"</text>
+    <text x="405" y="200" fill="#f1fa8c">/api/users/</text>
+    <text x="505" y="200" fill="#f8f8f2">{</text>
+    <text x="520" y="200" fill="#ffb86c">user_id</text>
+    <text x="590" y="200" fill="#f8f8f2">}</text>
+    <text x="605" y="200" fill="#f1fa8c">"</text>
+    
+    <text x="355" y="225" fill="#f8f8f2">        )</text>
+    
+    <text x="355" y="250" fill="#ff79c6">        if</text>
+    <text x="385" y="250" fill="#ff79c6">not</text>
+    <text x="425" y="250" fill="#f8f8f2">response</text>
+    <text x="505" y="250" fill="#f8f8f2">.</text>
+    <text x="515" y="250" fill="#f8f8f2">ok</text>
+    <text x="545" y="250" fill="#f8f8f2">:</text>
+    
+    <text x="375" y="275" fill="#ff79c6">            raise</text>
+    <text x="435" y="275" fill="#8be9fd">APIError</text>
+    <text x="515" y="275" fill="#f8f8f2">(</text>
+    <text x="525" y="275" fill="#f1fa8c">"Failed to fetch user"</text>
+    <text x="715" y="275" fill="#f8f8f2">)</text>
+    
+    <text x="355" y="300" fill="#f8f8f2">        data</text>
+    <text x="405" y="300" fill="#ff79c6">=</text>
+    <text x="425" y="300" fill="#ff79c6">await</text>
+    <text x="485" y="300" fill="#f8f8f2">response</text>
+    <text x="565" y="300" fill="#f8f8f2">.</text>
+    <text x="575" y="300" fill="#50fa7b">json</text>
+    <text x="615" y="300" fill="#f8f8f2">()</text>
+    
+    <text x="355" y="325" fill="#ff79c6">        return</text>
+    <text x="425" y="325" fill="#f8f8f2">data</text>
+    
+    <text x="335" y="350" fill="#ff79c6">    except</text>
+    <text x="395" y="350" fill="#8be9fd">Exception</text>
+    <text x="485" y="350" fill="#ff79c6">as</text>
+    <text x="515" y="350" fill="#f8f8f2">e</text>
+    <text x="535" y="350" fill="#f8f8f2">:</text>
+    
+    <text x="355" y="375" fill="#f8f8f2">        logger</text>
+    <text x="415" y="375" fill="#f8f8f2">.</text>
+    <text x="425" y="375" fill="#50fa7b">error</text>
+    <text x="475" y="375" fill="#f8f8f2">(</text>
+    <text x="485" y="375" fill="#f1fa8c">f"Error: {e}"</text>
+    <text x="605" y="375" fill="#f8f8f2">)</text>
+    
+    <text x="355" y="400" fill="#ff79c6">        raise</text>
+  </g>
+  
+  <!-- Status bar -->
+  <rect x="20" y="668" width="1160" height="12" rx="0 0 12 12" fill="#bd93f9"/>
+  <text x="30" y="677" font-family="monospace" font-size="10" fill="#1a1625">Python</text>
+  <text x="1000" y="677" font-family="monospace" font-size="10" fill="#1a1625">UTF-8</text>
+  <text x="1090" y="677" font-family="monospace" font-size="10" fill="#1a1625">Line 5, Col 12</text>
+</svg>

@@ -1,9 +1,9 @@
-import { loadEnv } from "vite";
 import { defineConfig } from 'astro/config';
+import { loadEnv } from "vite";
 
-import expressiveCode from 'astro-expressive-code';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import expressiveCode from 'astro-expressive-code';
 import spectre from './package/src';
 
 import node from '@astrojs/node';
@@ -23,7 +23,7 @@ const {
 
 // https://astro.build/config
 const config = defineConfig({
-  site: 'https://spectre.lou.gg',
+  site: 'https://maxames.io',
   output: 'static',
   integrations: [
     expressiveCode({
@@ -32,31 +32,21 @@ const config = defineConfig({
     mdx(),
     sitemap(),
     spectre({
-      name: 'Spectre',
+      name: 'Max Ames',
       openGraph: {
         home: {
-          title: 'Spectre',
-          description: 'A minimalistic theme for Astro.'
+          title: 'Max Ames',
+          description: 'My place on the internet.'
         },
         blog: {
           title: 'Blog',
-          description: 'News and guides for Spectre.'
+          description: 'Explore my writings.'
         },
         projects: {
           title: 'Projects'
         }
       },
-      giscus: {
-        repository: GISCUS_REPO,
-        repositoryId: GISCUS_REPO_ID,
-        category: GISCUS_CATEGORY,
-        categoryId: GISCUS_CATEGORY_ID,
-        mapping: GISCUS_MAPPING as any,
-        strict: GISCUS_STRICT === "true",
-        reactionsEnabled: GISCUS_REACTIONS_ENABLED === "true",
-        emitMetadata: GISCUS_EMIT_METADATA === "true",
-        lang: GISCUS_LANG,
-      }
+      giscus: false
     })
   ],
   adapter: node({

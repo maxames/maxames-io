@@ -1,0 +1,50 @@
+{
+  "startOnLoad": false,
+  "securityLevel": "loose",
+  "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+  "fontSize": 14,
+  "theme": "base",
+  "layout": "elk",
+  "themeVariables": {
+    "primaryColor": "#202020",
+    "primaryTextColor": "#ffffff",
+    "primaryBorderColor": "#a277ff",
+    "lineColor": "#ffffff",
+    "background": "#0b0b0b",
+    "mainBkg": "#202020",
+    "secondBkg": "#282828",
+    "tertiaryBkg": "#303030",
+    "textColor": "#ffffff",
+    "darkTextColor": "#ffffff",
+    "nodeBorder": "#a277ff",
+    "clusterBkg": "#202020",
+    "clusterBorder": "#8c5cf5",
+    "edgeLabelBackground": "#202020",
+    "edgeLabelColor": "#ffffff",
+    "nodeTextColor": "#ffffff",
+    "gridColor": "#353535",
+    "sectionBkgColor": "#202020",
+    "altSectionBkgColor": "#282828",
+    "fillType0": "#202020",
+    "fillType1": "#282828",
+    "fillType2": "#303030",
+    "fillType3": "#8c5cf5",
+    "fillType4": "#353535",
+    "fillType5": "#a277ff",
+    "fillType6": "#c2a8fd",
+    "fillType7": "#202020"
+  },
+  "flowchart": {
+    "rankSpacing": 60,
+    "nodeSpacing": 50,
+    "padding": 12,
+    "useMaxWidth": true,
+    "htmlLabels": true
+  },
+  "elk": {
+    "algorithm": "layered",
+    "elk.direction": "RIGHT",
+    "elk.spacing.nodeNode": "50",
+    "elk.layered.spacing.nodeNodeBetweenLayers": "60"
+  }
+}

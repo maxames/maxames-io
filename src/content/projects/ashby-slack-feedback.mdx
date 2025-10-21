@@ -1,0 +1,255 @@
+---
+title: Ashby Slack Feedback
+date: 01-20-2025
+description: Automated interview feedback collection via Slack modals for Ashby ATS. Built in ~3 days using FastAPI, AsyncPG, and the Slack SDK.
+image: ../assets/ashby-slack-feedback.svg
+info:
+  - text: GitHub
+    link: https://github.com/maxames/ashby-slack-feedback
+    icon:
+      type: lucide
+      name: github
+  - text: Documentation
+    link: https://github.com/maxames/ashby-slack-feedback/tree/main/docs
+    icon:
+      type: lucide
+      name: book-open
+---
+
+Interview feedback often gets delayed, with one of the reasons being that completing it requires context switching to an external tool. A typical flow:
+
+1. Interview ends → interviewer returns to primary work
+2. Hours or days pass → recruiter sends reminder
+3. Interviewer must: locate calendar invite → open Ashby link → navigate to candidate profile → find feedback form → recall context → submit
+
+This system reduces that to a single click from Slack. Interviewers receive automated reminders before interviews with one-click access to feedback forms that auto-generate from Ashby scorecard definitions and submit directly to Ashby's API.
+
+Most recruiting tools use Slack for notifications or simple approvals. This treats Slack as a full feedback surface with dynamic form generation.
+
+**Built in ~3 days using FastAPI, AsyncPG, and the Slack SDK.** Pyright strict mode for type safety. Deployment guides included for Docker, Render, Railway, Fly.io, and manual installation.
+
+## Architecture
+
+### Data Flow
+
+```
+Ashby Webhook → Normalize Schedule → Fan Out to Interviewers → Store Events
+    ↓
+APScheduler (every 5 min) → Check for interviews in 4-20 min window
+    ↓
+Slack DM with feedback button → Modal opens with dynamic form
+    ↓
+Submission → Transform to Ashby format → Submit via API
+```
+
+The system processes interview schedules through a multi-stage pipeline: webhook ingestion, data normalization, scheduled reminders, user interaction, and API submission. Each stage is designed for reliability and idempotency.
+
+### Core Components
+
+**`/api/`** - HTTP handlers for webhooks and Slack interactions
+**`/services/`** - Business logic for webhook processing, reminders, feedback submission
+**`/clients/`** - External API wrappers for Ashby and Slack
+**`/core/`** - Database connection pooling, config, structured logging
+**`/utils/`** - Security (HMAC verification), time handling (timezone-aware parsing)
+
+**Database**: PostgreSQL with AsyncPG connection pooling
+**Scheduler**: APScheduler for background jobs (reminder checks, data syncs)
+**Logging**: Structured logs via structlog
+
+## Technical Decisions
+
+### Full-Replace Upsert Strategy
+
+When interview schedules update, the system deletes old records and inserts new ones rather than attempting to diff changes. This is simpler to implement and safer for webhook idempotency—duplicate webhooks result in the same final state regardless of order.
+
+Trade-off: Slightly more database writes, but eliminates an entire class of sync bugs.
+
+### TypedDict at Boundaries
+
+External API responses are typed with TypedDict and cast once at the client layer. This provides static type checking without the runtime overhead of Pydantic models for every response.
+
+```python
+# types/ashby.py
+class CandidateTD(TypedDict):
+    id: str
+    name: str
+    email: str | None
+
+# clients/ashby.py
+def fetch_candidate(candidate_id: str) -> CandidateTD:
+    response = httpx.get(...)
+    return cast(CandidateTD, response.json())
+```
+
+Services and API handlers work with typed structures throughout. This catches mismatches at type-check time rather than runtime.
+
+### Dynamic Form Generation
+
+Slack modals are built from Ashby's feedback form definitions at runtime. When scorecards update in Ashby, the changes appear in Slack without redeployment.
+
+The mapping layer converts each Ashby field type to the appropriate Slack Block Kit component:
+
+- Ashby "Rating Scale (1-5)" → Slack `static_select` with five options
+- Ashby "Multi-select" → Slack `multi_static_select`
+- Ashby "Yes/No/Maybe" → Slack `radio_buttons`
+- Ashby "Text area" → Slack `plain_text_input` (multiline)
+
+On submission, values transform back to Ashby's expected format.
+
+### Auto-Save on Enter
+
+Text fields trigger save on Enter key press using Slack's `dispatch_action_config`. This prevents data loss if the modal is dismissed accidentally.
+
+Slack's `view_closed` event doesn't include form state, so the system can't save on modal close. The Enter-to-save pattern works around this limitation.
+
+### Reminder Timing Window
+
+**4-20 minutes before interview start**
+
+Jobs run every 5 minutes via APScheduler. Too early and context isn't fresh; too late and interviewers are already in the meeting. The 4-20 minute window balances timeliness with usefulness.
+
+Single-instance only—horizontal scaling would require distributed lock (Redis) or external cron triggering admin endpoints. Unlikely to be necessary unless interview volume exceeds several hundred per hour.
+
+### Idempotency
+
+**Webhooks**: Full-replace strategy ensures identical final state regardless of duplicates.
+
+**Reminders**: Claim-before-send pattern. The system inserts a record into `feedback_reminders_sent` before sending the Slack message. A unique constraint on `(event_id, interviewer_id)` prevents duplicate sends even if the job runs multiple times.
+
+**Submissions**: Ashby's API handles idempotency on their end. Safe to retry on network failure.
+
+## Implementation Details
+
+### Mapping Ashby to Slack
+
+Ashby's API returns interview schedules with nested events and interviewer arrays. The system:
+
+1. Extracts schedule-level metadata (status, timestamps, candidate ID)
+2. Fans out individual interview events to per-interviewer records
+3. Makes multiple API calls to populate candidate context and feedback forms
+4. Stores everything in normalized PostgreSQL tables
+
+The reminder job queries for events starting soon, fetches fresh candidate data, builds the Slack modal, and sends a DM.
+
+### Form Field Mapping
+
+Each Ashby field definition has a type, label, and possible values. The `slack_field_builders.py` module converts these to Slack Block Kit components:
+
+```python
+def build_rating_scale(field: FeedbackFieldTD) -> dict:
+    """Ashby rating scale → Slack static_select"""
+    return {
+        "type": "input",
+        "block_id": f"field_{field['id']}",
+        "element": {
+            "type": "static_select",
+            "action_id": f"field_{field['id']}",
+            "options": [
+                {"text": {"type": "plain_text", "text": str(i)}, "value": str(i)}
+                for i in range(1, 6)
+            ]
+        },
+        "label": {"type": "plain_text", "text": field['title']}
+    }
+```
+
+On submission, `slack_parsers.py` extracts values from Slack's nested state structure and transforms them back:
+
+```python
+def extract_rating(value: dict) -> dict:
+    """Slack selected_option → Ashby rating value"""
+    return {
+        "value": {
+            "value": int(value["selected_option"]["value"])
+        }
+    }
+```
+
+This keeps the mapping logic isolated and testable.
+
+### Database Schema
+
+**Core tables:**
+
+- `interview_schedules` - Schedule-level metadata
+- `interview_events` - Individual interview events with timing and location
+- `interview_assignments` - Many-to-many: events ↔ interviewers
+- `feedback_reminders_sent` - Tracks reminder delivery and submission
+- `feedback_drafts` - Auto-saved form data
+
+**Reference tables:**
+
+- `interviews` - Interview type definitions from Ashby
+- `feedback_form_definitions` - Cached scorecard schemas
+- `slack_users` - Email → Slack user ID mapping
+
+The schema uses `TIMESTAMPTZ` for all timestamps (UTC) and includes indexes on foreign keys and query filters.
+
+## Development Approach
+
+Built using multi-agent AI orchestration (GPT-4, Claude Sonnet 4.5). Pattern: 3-4 agents active simultaneously with separated contexts. Some had full codebase access via Cursor, others had only architectural requirements.
+
+Process:
+
+1. Define design constraint or technical requirement
+2. Agents propose implementations in parallel
+3. Identify gaps or inconsistencies between proposals
+4. Agents discuss trade-offs (with human as intermediary)
+5. Converge on solution
+6. Validate against original requirement
+
+This prevented context window saturation and separated pattern matching (what similar code looks like) from reasoning about principles (why this approach over that one).
+
+The result: type-safe, well-tested code with clear separation of concerns, completed in ~3 days instead of 2-3 weeks of solo development.
+
+## Type Safety and Testing
+
+**Type checking**: Pyright strict mode, zero type errors. All external API responses typed at boundaries using TypedDict. Services and API handlers work with typed structures throughout.
+
+**Test coverage**: ~50%
+
+- Unit tests: HMAC verification, timezone parsing, Slack field builders
+- Integration tests: Webhook processing, feedback flow, reminder scheduling
+- Contract tests: Ashby/Slack payload validation
+
+**Not included**: Authentication on admin endpoints. Must be firewall-protected or extended with API keys for production.
+
+## Deployment
+
+Documentation included for:
+
+- **Render.com** - One-click via `render.yaml`
+- **Railway** - CLI deployment
+- **Fly.io** - Edge deployment
+- **Docker Compose** - Local development
+- **Manual** - systemd + nginx + Let's Encrypt
+
+Database schema initialization required post-deployment (manual SQL application). Migration tracking via `schema_migrations` table.
+
+Full deployment guides in `/docs/DEPLOYMENT.md`.
+
+## Operational Characteristics
+
+**Rate limiting**: 100 requests/minute on webhook endpoint (SlowAPI)
+**Signature verification**: HMAC-SHA256 for Ashby webhooks, Slack SDK validation for interactions
+**Connection pooling**: 2-10 connections (AsyncPG), configurable via environment variable
+**Health check**: `/health` endpoint returns database status and pool statistics
+**Graceful shutdown**: Scheduler completes running jobs before disconnect
+
+## Current Status
+
+Open source. No production deployment yet. One component of broader recruiting automation work.
+
+This addresses feedback collection timing and surface. Other friction points—reminder escalation, feedback quality signals, submission analytics—are separate problems that would require additional tooling.
+
+## Limitations
+
+**Single-instance scheduler**: APScheduler runs in-process. Horizontal scaling would require distributed lock (Redis/PostgreSQL advisory locks) or external job trigger (cron calling admin endpoints).
+
+**No retry logic for failed Slack messages**: If Slack API call fails, reminder is marked as sent to prevent duplicate sends. Manual retry via admin endpoint required.
+
+**Timezone handling**: All timestamps stored as UTC. Slack converts to user timezone automatically. Ashby API assumes UTC for ISO 8601 strings with 'Z' suffix.
+
+---
+
+Licensed under the MIT License.

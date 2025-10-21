@@ -1,0 +1,13 @@
+flowchart TD
+    START["Initial<br>Contact"] --> PE["Potential Energy<br>Early curiosity<br>Low commitment"]
+    PE -->|Data Requests<br>Deep Questions| AE["Active Evaluation<br>Gathering data<br>Comparing options"]
+    AE -->|Alignment Confirmed<br>Language Shifts| S["Stabilization<br>High alignment<br>Emotional anchoring"]
+    S -->|Offer Extended| SUCCESS["Offer<br>Accepted"]
+
+    PE -->|No Follow-up<br>Generic Responses| D1["Decay<br>Interest waning<br>System failure"]
+    AE -->|Process Delays<br>Information Gaps| D2["Decay<br>Interest waning<br>System failure"]
+    S -->|Competing Offer<br>Scope Change| D3["Decay<br>Interest waning<br>System failure"]
+
+    D1 --> EXIT1["Candidate<br>Exits"]
+    D2 --> EXIT2["Candidate<br>Exits"]
+    D3 --> EXIT3["Candidate<br>Exits"]

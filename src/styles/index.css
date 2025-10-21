@@ -11,11 +11,6 @@
   }
 }
 
-.flex-col-card {
-  display: flex;
-  flex-direction: column;
-}
-
 .header-container {
   display: flex;
   flex-direction: row;
@@ -52,32 +47,8 @@
   outline: none;
 }
 
-.post-date, .work-experience-duration {
+.post-date {
   color: #c7c7c7;
-}
-
-.work-experience-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.work-experience-entry:not(:last-of-type) {
-  border-bottom: 1px solid #353535;
-  padding-bottom: 1rem;
-}
-
-.work-experience-duration {
-  font-size: .925rem;
-}
-
-.work-experience-company {
-  margin-top: .25rem;
-  margin-bottom: .5rem;
-}
-
-.work-experience-role {
-  margin-bottom: .75rem;
 }
 
 .socials-link {
