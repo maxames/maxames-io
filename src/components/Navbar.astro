@@ -8,7 +8,7 @@ const path = Astro.url.pathname;
   <a class="site-title" href="/">{name}</a>
   <ul>
     <li>
-      <a href="/blog" class:list={{ active: path.startsWith('/blog') }}>Blog</a>
+      <a href="/articles" class:list={{ active: path.startsWith('/articles') }}>Articles</a>
     </li>
     <li class="nav-separator">/</li>
     <li>
@@ -75,7 +75,7 @@ const path = Astro.url.pathname;
   searchElement?.addEventListener('focus', async () => {
     searchElement.placeholder = '';
     results.classList.add('active');
-    
+
     // initialize pagefind on first focus
     if (!pagefindInitialized) {
       try {
@@ -87,7 +87,7 @@ const path = Astro.url.pathname;
       }
     }
   });
-  
+
   searchElement?.addEventListener('blur', () => {
     handleTabletChange();
     setTimeout(() => {
@@ -121,7 +121,7 @@ const path = Astro.url.pathname;
       i++;
 
       const data = await result.data();
-      
+
       searchResultHtml += `
         <a href="${data.url}">
           <h3 class="no-mt">${data.meta.title}</h3>
@@ -304,7 +304,7 @@ const path = Astro.url.pathname;
       padding: 0;
       font-size: 1.125em;
     }
-  
+
     nav ul li a {
       display: block;
       padding: .75rem 0;

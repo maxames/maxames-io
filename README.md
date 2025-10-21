@@ -1,6 +1,6 @@
 # maxames.io
 
-Personal website and blog, featuring writings on recruiting systems, operations, and technical topics.
+Personal website featuring articles on recruiting systems, operations, and technical topics.
 
 ## Credits
 

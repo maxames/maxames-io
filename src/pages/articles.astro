@@ -11,8 +11,8 @@ const posts = await getCollection('posts', (post) => post.data.draft !== true);
 const tags = posts.flatMap((post) => post.data.tags.map((tag) => tag.id));
 ---
 <Layout
-  title={openGraph.blog.title || "Blog"}
-  description={openGraph.blog.description}
+  title={openGraph.articles.title || "Articles"}
+  description={openGraph.articles.description}
 	pagefindIgnore
 >
   <div class="layout-grid-left" slot="left">
@@ -22,8 +22,8 @@ const tags = posts.flatMap((post) => post.data.tags.map((tag) => tag.id));
         {Array.from(new Set(tags)).map((tag) => (
           <li>
             <a
-              class="blog-tag"
-              href="/blog"
+              class="article-tag"
+              href="/articles"
               data-tag={tag}
             >
               {tag}
@@ -37,11 +37,11 @@ const tags = posts.flatMap((post) => post.data.tags.map((tag) => tag.id));
 		<Card>
 			<div class="header-container">
 				<Icon type="lucide" name="rss" width={24} height={24} class='glow-icon' />
-				<h2>Latest Posts</h2>
+				<h2>Latest Articles</h2>
 			</div>
 			<div class="content-container">
 				{posts.sort((a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime()).map((post) => (
-					<a href={`/blog/${post.id}`} class="post-container" data-tags={post.data.tags.map((tag) => tag.id).join(",")}>
+					<a href={`/articles/${post.id}`} class="post-container" data-tags={post.data.tags.map((tag) => tag.id).join(",")}>
 						<div class="post-header">
 							<h3>{post.data.title}</h3>
 							<span class="post-date">{post.data.createdAt.toLocaleDateString()}</span>
@@ -54,7 +54,7 @@ const tags = posts.flatMap((post) => post.data.tags.map((tag) => tag.id));
   </div>
 </Layout>
 <script>
-  const tags = document.querySelectorAll<HTMLAnchorElement>('.blog-tag');
+  const tags = document.querySelectorAll<HTMLAnchorElement>('.article-tag');
   const posts = document.querySelectorAll<HTMLAnchorElement>('.post-container');
   const url = new URL(window.location.href);
   const initialTags = url.searchParams.get('tags')?.split(',').filter((tag) => tag.length > 0) || [];
