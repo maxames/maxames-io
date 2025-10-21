@@ -26,7 +26,7 @@ This system reduces that to a single click from Slack. Interviewers receive auto
 
 Most recruiting tools use Slack for notifications or simple approvals. This treats Slack as a full feedback surface with dynamic form generation.
 
-**Built in ~3 days using FastAPI, AsyncPG, and the Slack SDK.** Pyright strict mode for type safety. Deployment guides included for Docker, Render, Railway, Fly.io, and manual installation.
+Deployment guides included for Docker, Render, Railway, Fly.io, and manual installation.
 
 ## Architecture
 
@@ -46,15 +46,14 @@ The system processes interview schedules through a multi-stage pipeline: webhook
 
 ### Core Components
 
-**`/api/`** - HTTP handlers for webhooks and Slack interactions
-**`/services/`** - Business logic for webhook processing, reminders, feedback submission
-**`/clients/`** - External API wrappers for Ashby and Slack
-**`/core/`** - Database connection pooling, config, structured logging
-**`/utils/`** - Security (HMAC verification), time handling (timezone-aware parsing)
-
-**Database**: PostgreSQL with AsyncPG connection pooling
-**Scheduler**: APScheduler for background jobs (reminder checks, data syncs)
-**Logging**: Structured logs via structlog
+- **`/api/`** - HTTP handlers for webhooks and Slack interactions
+- **`/services/`** - Business logic for webhook processing, reminders, feedback submission
+- **`/clients/`** - External API wrappers for Ashby and Slack
+- **`/core/`** - Database connection pooling, config, structured logging
+- **`/utils/`** - Security (HMAC verification), time handling (timezone-aware parsing)
+- **Database**: PostgreSQL with AsyncPG connection pooling
+- **Scheduler**: APScheduler for background jobs (reminder checks, data syncs)
+- **Logging**: Structured logs via structlog
 
 ## Technical Decisions
 
@@ -230,11 +229,11 @@ Full deployment guides in `/docs/DEPLOYMENT.md`.
 
 ## Operational Characteristics
 
-**Rate limiting**: 100 requests/minute on webhook endpoint (SlowAPI)
-**Signature verification**: HMAC-SHA256 for Ashby webhooks, Slack SDK validation for interactions
-**Connection pooling**: 2-10 connections (AsyncPG), configurable via environment variable
-**Health check**: `/health` endpoint returns database status and pool statistics
-**Graceful shutdown**: Scheduler completes running jobs before disconnect
+- **Rate limiting**: 100 requests/minute on webhook endpoint (SlowAPI)
+- **Signature verification**: HMAC-SHA256 for Ashby webhooks, Slack SDK validation for interactions
+- **Connection pooling**: 2-10 connections (AsyncPG), configurable via environment variable
+- **Health check**: `/health` endpoint returns database status and pool statistics
+- **Graceful shutdown**: Scheduler completes running jobs before disconnect
 
 ## Current Status
 
