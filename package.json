@@ -2,7 +2,6 @@
   "name": "maxames-io",
   "type": "module",
   "version": "1.0.2",
-  "packageManager": "pnpm@9.15.0",
   "scripts": {
     "dev": "astro dev",
     "build:mermaid": "for file in src/content/assets/diagrams/*.mmd; do mmdc -i \"$file\" -o \"src/content/assets/$(basename \"$file\" .mmd).svg\" -c mermaid.config.json --width 980 --backgroundColor transparent; done",
