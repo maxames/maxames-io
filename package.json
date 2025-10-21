@@ -7,14 +7,13 @@
     "build:mermaid": "for file in src/content/assets/diagrams/*.mmd; do mmdc -i \"$file\" -o \"src/content/assets/$(basename \"$file\" .mmd).svg\" -c mermaid.config.json --width 980 --backgroundColor transparent; done",
     "build": "astro build",
     "build:local": "npm run build:mermaid && astro build",
-    "start": "node dist/server/entry.mjs",
+    "start": "astro preview",
     "preview": "astro preview",
     "astro": "astro",
-    "postbuild": "pagefind --site dist/client"
+    "postbuild": "pagefind --site dist"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.4",
-    "@astrojs/node": "^9.4.2",
     "@astrojs/sitemap": "^3.5.0",
     "@iconify-json/lucide": "^1.2.20",
     "@iconify-json/simple-icons": "^1.2.18",
