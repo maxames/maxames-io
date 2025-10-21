@@ -117,6 +117,12 @@ Single-instance only—horizontal scaling would require distributed lock (Redis)
 
 **Submissions**: Ashby's API handles idempotency on their end. Safe to retry on network failure.
 
+### UTC-First Timezone Strategy
+
+All timestamps stored as `TIMESTAMPTZ` (UTC) in PostgreSQL. Ashby API communicates in UTC (ISO 8601 with 'Z'). Slack handles user timezone display automatically.
+
+This eliminates timezone conversion bugs by keeping all system boundaries in UTC. No application-level timezone math means no DST edge cases or user travel issues.
+
 ## Implementation Details
 
 ### Mapping Ashby to Slack
@@ -244,8 +250,6 @@ This addresses feedback collection timing and surface. Other friction points—r
 ## Limitations
 
 **Single-instance scheduler**: APScheduler runs in-process. Horizontal scaling would require distributed lock (Redis/PostgreSQL advisory locks) or external job trigger (cron calling admin endpoints).
-
-**Timezone handling**: All timestamps stored as UTC. Slack converts to user timezone automatically. Ashby API assumes UTC for ISO 8601 strings with 'Z' suffix.
 
 ---
 
