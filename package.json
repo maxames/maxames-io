@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "build:mermaid": "for file in src/content/assets/diagrams/*.mmd; do mmdc -i \"$file\" -o \"src/content/assets/$(basename \"$file\" .mmd).svg\" -c mermaid.config.json --width 980 --backgroundColor transparent; done",
-    "build": "npm run build:mermaid && astro build",
+    "build": "astro build",
+    "build:local": "npm run build:mermaid && astro build",
     "start": "node dist/server/entry.mjs",
     "preview": "astro preview",
     "astro": "astro",
