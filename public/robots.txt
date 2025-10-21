@@ -28,10 +28,10 @@ User-agent: Twitterbot
 Disallow: /
 
 User-agent: LinkedInBot
-Disallow: /
+Allow: /
 
 User-agent: WhatsApp
-Disallow: /
+Allow: /
 
 User-agent: Applebot
 Disallow: /
