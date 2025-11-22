@@ -45,8 +45,8 @@ try {
 } catch (error) {
   console.error(`Failed to load diagram: ${src}.svg`, error);
   svg = `<svg width="400" height="100" xmlns="http://www.w3.org/2000/svg">
-    <rect width="100%" height="100%" fill="#202020" stroke="#a277ff" stroke-width="2"/>
-    <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff" font-family="Inter, sans-serif" font-size="14">
+    <rect width="100%" height="100%" fill="#ffffff" stroke="#007ee5" stroke-width="2"/>
+    <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#3d464d" font-family="Inter, sans-serif" font-size="14">
       Diagram not found: ${src}
     </text>
   </svg>`;
@@ -68,7 +68,7 @@ try {
     height: auto;
     background-color: transparent;
     border-radius: 0.25rem;
-    border: 1px solid #353535;
+    border: 1px solid #7b8994;
     padding: 1rem;
   }
 
@@ -76,57 +76,57 @@ try {
   .diagram svg text {
     font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     font-size: 14px !important;
-    fill: #ffffff !important;
+    fill: #3d464d !important;
     font-weight: 500 !important;
   }
 
-  /* Override any light backgrounds with dark theme */
+  /* Override any dark backgrounds with light theme */
   .diagram svg rect,
   .diagram svg circle,
   .diagram svg polygon {
-    fill: #202020 !important;
-    stroke: #a277ff !important;
+    fill: #ffffff !important;
+    stroke: #007ee5 !important;
     stroke-width: 2px !important;
   }
 
   /* Style different node types */
   .diagram svg .node.primary rect,
   .diagram svg .node.primary circle {
-    fill: #8c5cf5 !important;
-    stroke: #c2a8fd !important;
+    fill: #007ee5 !important;
+    stroke: #3399f0 !important;
   }
 
   .diagram svg .node.secondary rect,
   .diagram svg .node.secondary circle {
-    fill: #282828 !important;
-    stroke: #8c5cf5 !important;
+    fill: #f8f9fa !important;
+    stroke: #007ee5 !important;
   }
 
   .diagram svg .node.tertiary rect,
   .diagram svg .node.tertiary circle {
-    fill: #303030 !important;
-    stroke: #c2a8fd !important;
+    fill: #e5e7ea !important;
+    stroke: #3399f0 !important;
   }
 
   /* Style connection lines */
   .diagram svg path {
-    stroke: #ffffff !important;
+    stroke: #007ee5 !important;
     stroke-width: 2px !important;
   }
 
   .diagram svg .arrowhead {
-    fill: #ffffff !important;
-    stroke: #ffffff !important;
+    fill: #007ee5 !important;
+    stroke: #007ee5 !important;
   }
 
   /* Edge labels */
   .diagram svg .edgeLabel {
-    background-color: #202020 !important;
-    color: #ffffff !important;
-    fill: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #3d464d !important;
+    fill: #3d464d !important;
     padding: 0.25rem 0.5rem !important;
     border-radius: 0.125rem !important;
-    border: 1px solid #353535 !important;
+    border: 1px solid #7b8994 !important;
   }
 
   /* Responsive design */

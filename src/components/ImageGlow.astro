@@ -1,3 +1,6 @@
+<!--
+COMMENTED OUT - Image glow effect
+
 ---
 import { Image } from 'astro:assets';
 import type { LocalImageProps, RemoteImageProps } from 'astro:assets';
@@ -13,7 +16,7 @@ const height = props.height;
 <div class="glow-image">
   <Image {...props} />
   <Image
-    width={width ? ((typeof width === 'number' ? width : Number.parseInt(width)) / 4) : undefined} 
+    width={width ? ((typeof width === 'number' ? width : Number.parseInt(width)) / 4) : undefined}
     height={height ? ((typeof height === 'number' ? height : Number.parseInt(height)) / 4) : undefined}
     {...props}
     class='glow'
@@ -39,3 +42,16 @@ const height = props.height;
     filter: blur(8px);
   }
 </style>
+-->
+
+<!-- Image glow effect disabled for cleaner light theme -->
+---
+import type { LocalImageProps, RemoteImageProps } from 'astro:assets';
+import { Image } from 'astro:assets';
+
+type Props = LocalImageProps | RemoteImageProps;
+
+const { ...props } = Astro.props;
+---
+
+<Image {...props} />

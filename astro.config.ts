@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 import expressiveCode from 'astro-expressive-code';
 import spectre from './package/src';
 
-import { spectreDark } from './src/ec-theme';
+import { spectreLight } from './src/ec-theme';
 
 const {
   GISCUS_REPO,
@@ -26,7 +26,7 @@ const config = defineConfig({
   output: 'static',
   integrations: [
     expressiveCode({
-      themes: [spectreDark],
+      themes: [spectreLight],
     }),
     mdx(),
     sitemap(),

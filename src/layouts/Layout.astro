@@ -3,7 +3,7 @@ import '../styles/reset.css';
 import '../styles/globals.css';
 import '../styles/mermaid.css';
 
-import Background from '../components/Background.astro';
+// import Background from '../components/Background.astro';  // COMMENTED OUT - Background animation
 import Navbar from '../components/Navbar.astro';
 import LayoutGrid from '../components/LayoutGrid.astro';
 import { name, themeColor, twitterHandle } from 'spectre:globals';
@@ -72,8 +72,7 @@ const { title, description, image, pagefindIgnore, article } = Astro.props;
 				<slot name="left" slot="left" />
 				<slot name="right" slot="right" />
 			</LayoutGrid>
-			<slot name="404" />
 		</main>
-		<Background />
+		<!-- <Background /> COMMENTED OUT - Background animation -->
 	</body>
 </html>
