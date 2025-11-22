@@ -137,7 +137,7 @@ export default function integration(options: z.infer<typeof optionsSchema>): Ast
 
 	const globals = viteVirtualModulePluginBuilder('spectre:globals', 'spectre-theme-globals', `
     export const name = ${JSON.stringify(validatedOptions.name)};
-    export const themeColor = ${JSON.stringify(validatedOptions.themeColor ?? '#8c5cf5')};
+    export const themeColor = ${JSON.stringify(validatedOptions.themeColor ?? '#007ee5')};
     export const twitterHandle = ${JSON.stringify(validatedOptions.twitterHandle)};
     export const openGraph = {
       home: ${JSON.stringify(validatedOptions.openGraph.home)},

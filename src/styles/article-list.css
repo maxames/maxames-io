@@ -23,14 +23,15 @@
 
 .article-tag {
   padding: .25rem .5rem;
-  background: #252525;
-  color: white;
+  background: #f8f9fa;
+  color: #47525d;
   text-decoration: none;
+  border: 1px solid #e5e7ea;
 }
 
 .article-tag:hover, .article-tag:focus-visible {
-  background: #353535;
-  color: white;
+  background: #e5e7ea;
+  color: #3d464d;
   text-decoration: none;
 }
 

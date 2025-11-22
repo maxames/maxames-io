@@ -23,8 +23,9 @@
 }
 
 html {
-	color-scheme: dark;
-  background-color: #0b0b0b;
+	color-scheme: light;
+  background-color: #ffffff;
+  color: #3d464d;
 }
 
 html,
@@ -35,6 +36,8 @@ body {
 body {
 	-webkit-font-smoothing: antialiased;
   font-family: 'Geist', Arial, Helvetica, sans-serif;
+  background-color: #ffffff;
+  color: #3d464d;
 }
 
 input,
@@ -81,10 +84,12 @@ pre, pre *, code {
 }
 
 pre {
-  border: 1px solid rgb(#353535);
+  border: 1px solid #e5e7ea;
   overflow-y: hidden;
   padding: .5rem;
   border-radius: .25rem;
+  background-color: #f8f9fa;
+  color: #3d464d;
 }
 
 pre.astro-code code {

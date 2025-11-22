@@ -1,10 +1,19 @@
 :root {
-  --primary: #8c5cf5;
+  --primary: #007ee5;
   /* Needed for some hover effects. This is just the R, G and B values of the hex color above */
-  --primary-rgb: 140, 92, 245;
+  --primary-rgb: 0, 126, 229;
   /* Used for links */
-  --primary-light: #a277ff;
-  --primary-lightest: #c2a8fd;
+  --primary-light: #1a8ceb;
+  --primary-lightest: #3399f0;
+
+  /* Light theme color palette */
+  --background: #ffffff;
+  --text-primary: #3d464d;
+  --text-secondary: #47525d;
+  --border-color: #7b8994;
+  --border-light: #e5e7ea;
+  --surface: #ffffff;
+  --surface-hover: #f8f9fa;
 }
 
 .overview-list {
@@ -50,9 +59,15 @@ main {
   padding: 2rem 0;
 }
 
+/* COMMENTED OUT - Icon glow effect
 .glow-icon {
   color: var(--primary);
   filter: drop-shadow(0 0 4px var(--primary));
+}
+*/
+
+.glow-icon {
+  color: var(--primary);
 }
 
 .expressive-code {
@@ -94,16 +109,17 @@ main {
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
-  border: 1px solid #353535;
-  color: #ffffff;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
   text-decoration: none;
   transition: background-color .15s ease, border .15s ease;
+  background-color: var(--surface);
 }
 
 .post-container:hover, .post-container:focus-visible {
-  background-color: rgba(var(--primary-rgb), .125);
+  background-color: var(--surface-hover);
   border: 1px solid var(--primary);
-  color: white;
+  color: var(--text-primary);
   text-decoration: none;
 }
 
@@ -122,16 +138,22 @@ main {
 }
 
 .post-date {
-  color: #c7c7c7;
+  color: var(--text-secondary);
 }
 
+/* COMMENTED OUT - Text glow effect
 .text-glow {
   color: var(--primary);
   filter: drop-shadow(0 0 12px var(--primary));
 }
+*/
+
+.text-glow {
+  color: var(--primary);
+}
 
 .block-link {
-  color: white;
+  color: var(--text-primary);
   padding: .25rem .5rem;
 }
 
