@@ -10,5 +10,13 @@
     "build:notes": "pnpm --filter notes build",
     "preview": "pnpm --filter main preview",
     "preview:notes": "pnpm --filter notes preview"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@biomejs/biome",
+      "@tailwindcss/oxide",
+      "esbuild",
+      "sharp"
+    ]
   }
 }
