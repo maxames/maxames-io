@@ -1,21 +1,14 @@
 {
-  "name": "@leifjerami/biolink-clone",
+  "name": "maxames-io",
+  "version": "1.0.0",
+  "private": true,
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/check": "^0.9.4",
-    "astro": "^5.16.0",
-    "esbuild": "^0.27.0",
-    "typescript": "^5.8.3"
-  },
-  "devDependencies": {
-    "rollup": "^4.41.0"
+    "dev": "pnpm --filter main dev",
+    "dev:notes": "pnpm --filter notes dev",
+    "build": "pnpm --filter main build",
+    "build:notes": "pnpm --filter notes build",
+    "preview": "pnpm --filter main preview",
+    "preview:notes": "pnpm --filter notes preview"
   }
 }
