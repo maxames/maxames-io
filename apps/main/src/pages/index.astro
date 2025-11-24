@@ -40,6 +40,7 @@ import { Content as BioContent } from './bio.md';
 :global(a) {
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 1rem;
   background-color: #d1d5db;
   border-radius: 8px;
@@ -47,6 +48,7 @@ import { Content as BioContent } from './bio.md';
   color: #333;
   transition: all 0.3s ease;
   border: 3px solid #333;
+  position: relative;
 }
 
 :global(a:hover) {
@@ -56,7 +58,9 @@ import { Content as BioContent } from './bio.md';
 }
 
 :global(a i) {
-  margin-right: 15px;
+  position: absolute;
+  left: 1rem;
+  margin-right: 0;
   font-size: 1.2em;
   width: 20px;
   text-align: center;
@@ -64,12 +68,12 @@ import { Content as BioContent } from './bio.md';
 }
 
 :global(a span) {
-  flex-grow: 1;
+  flex-grow: 0;
   text-align: center;
 }
 
 /* Email and TidyCal cards */
-:global(a[href="mailto:example@email.com"]) {
+:global(a[href="mailto:site+click@maxames.io"]) {
   background-color: #666;
   border-color: #333;
   color: white;
@@ -94,9 +98,15 @@ import { Content as BioContent } from './bio.md';
 :global(a:hover .fa-youtube) {
   color: #ff0000;
 }
+:global(a:hover .fa-note-sticky) {
+  color: #f59e0b;
+}
+:global(a:hover .fa-envelope) {
+  color: #ef4444;
+}
 
-:global(a[href="mailto:example@email.com"]:hover) {
-  background-color: #999;
+:global(a[href="mailto:site+click@maxames.io"]:hover) {
+  background-color: #ffffff;
   color: #333;
   border-color: #3498db;
 }

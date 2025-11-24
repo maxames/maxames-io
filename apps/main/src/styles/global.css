@@ -10,28 +10,3 @@ body {
 h1 {
   color: #2c3e50;
 }
-
-a {
-  color: #3498db;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: none;
-}
-
-li a {
-  position: relative;
-}
-
-li a i {
-  position: absolute;
-  left: 1rem;
-}
-
-li a .spacer {
-  position: absolute;
-  right: 1rem;
-  width: 20px;
-  visibility: hidden;
-}
