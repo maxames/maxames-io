@@ -20,35 +20,18 @@ a:hover {
   text-decoration: none;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  margin-bottom: 10px;
-}
-
 li a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
-  padding: 1rem 3rem;
-  width: 100%;
-  max-width: 300px;
-  margin: 0 auto;
-  border: 2px solid #3498db;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
-}
-
-li a:hover {
-  background-color: #3498db;
-  color: white;
 }
 
 li a i {
   position: absolute;
   left: 1rem;
+}
+
+li a .spacer {
+  position: absolute;
+  right: 1rem;
+  width: 20px;
+  visibility: hidden;
 }
